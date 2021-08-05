@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -19,7 +19,9 @@ const validationSchema = Yup.object().shape({
   number: Yup.string().phone('+38', true, 'Valid number type +380*********'),
 });
 
-function ContactsForm({ onSubmit }) {
+function ContactsForm() {
+  const dispatch = useDispatch();
+
   let nameInputId = nanoid(3);
   let phoneInputId = nanoid(3);
 
@@ -29,8 +31,7 @@ function ContactsForm({ onSubmit }) {
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm }) => {
         const { name, number } = values;
-        onSubmit({ id: nanoid(3), name, number });
-
+        dispatch(actions.addContact({ id: nanoid(3), name, number }));
         resetForm();
       }}
     >
@@ -59,9 +60,4 @@ function ContactsForm({ onSubmit }) {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: ({ id, name, number }) =>
-    dispatch(actions.addContact({ id, name, number })),
-});
-
-export default connect(null, mapDispatchToProps)(ContactsForm);
+export default ContactsForm;

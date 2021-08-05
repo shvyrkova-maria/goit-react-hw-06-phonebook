@@ -1,7 +1,6 @@
-// import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FaUser, FaPhoneAlt } from 'react-icons/fa';
-import { connect } from 'react-redux';
 import * as actions from 'redux/contacts/contacts-actions';
 import {
   Contacts,
@@ -10,22 +9,20 @@ import {
   Button,
 } from 'components/ContactsList/ContactsList.styled';
 
-function ContactsList({ contacts, onDeleteClick }) {
-  // useEffect(() => {
-  //   const savedContacts = localStorage.getItem('contacts');
-  //   const parsedSavedContacts = JSON.parse(savedContacts);
-  //   if (parsedSavedContacts) {
-  //     setContacts(parsedSavedContacts);
-  //   }
-  // }, []);
+function ContactsList() {
+  const { contacts, filter } = useSelector(state => state.phonebook);
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
+  const normalizeFilter = filter.toLowerCase();
+  const filtred = contacts.filter(
+    ({ name, number }) =>
+      name.toLowerCase().includes(normalizeFilter) ||
+      number.includes(normalizeFilter),
+  );
 
   return (
     <Contacts>
-      {contacts.map(({ id, name, number }) => {
+      {filtred.map(({ id, name, number }) => {
         return (
           <ContactsItem key={id}>
             <div>
@@ -38,7 +35,10 @@ function ContactsList({ contacts, onDeleteClick }) {
                 <span>{number}</span>
               </ContactsDetails>
             </div>
-            <Button type="button" onClick={() => onDeleteClick(id)}>
+            <Button
+              type="button"
+              onClick={() => dispatch(actions.deleteContact(id))}
+            >
               Delete
             </Button>
           </ContactsItem>
@@ -50,23 +50,6 @@ function ContactsList({ contacts, onDeleteClick }) {
 
 ContactsList.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-  onDeleteClick: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-  const { contacts, filter } = state.phonebook;
-  const normalizeFilter = filter.toLowerCase();
-  return {
-    contacts: contacts.filter(
-      ({ name, number }) =>
-        name.toLowerCase().includes(normalizeFilter) ||
-        number.includes(normalizeFilter),
-    ),
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  onDeleteClick: id => dispatch(actions.deleteContact(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);
+export default ContactsList;

@@ -1,18 +1,21 @@
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { DebounceInput } from 'react-debounce-input';
-import { connect } from 'react-redux';
 import * as actions from 'redux/contacts/contacts-actions';
 
-function Filter({ currentFilter, onChange }) {
+function Filter() {
+  const filter = useSelector(state => state.phonebook.filter);
+  const dispatch = useDispatch();
+
   return (
     <DebounceInput
       id={`id-${nanoid(3)}`}
       type="text"
       name="name"
-      value={currentFilter}
+      value={filter}
       debounceTimeout={700}
-      onChange={onChange}
+      onChange={event => dispatch(actions.getFilterValue(event.target.value))}
       placeholder="Search"
     />
   );
@@ -20,15 +23,6 @@ function Filter({ currentFilter, onChange }) {
 
 Filter.propTypes = {
   filter: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  currentFilter: state.phonebook.filter,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onChange: event => dispatch(actions.getFilterValue(event.target.value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default Filter;
