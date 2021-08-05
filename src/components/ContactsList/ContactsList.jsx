@@ -1,3 +1,4 @@
+// import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FaUser, FaPhoneAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
@@ -10,6 +11,18 @@ import {
 } from 'components/ContactsList/ContactsList.styled';
 
 function ContactsList({ contacts, onDeleteClick }) {
+  // useEffect(() => {
+  //   const savedContacts = localStorage.getItem('contacts');
+  //   const parsedSavedContacts = JSON.parse(savedContacts);
+  //   if (parsedSavedContacts) {
+  //     setContacts(parsedSavedContacts);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('contacts', JSON.stringify(contacts));
+  // }, [contacts]);
+
   return (
     <Contacts>
       {contacts.map(({ id, name, number }) => {
