@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { DebounceInput } from 'react-debounce-input';
 import * as actions from 'redux/contacts/contacts-actions';
+import { getFilterValue } from 'redux/contacts/contacts-selectors';
 
 function Filter() {
-  const filter = useSelector(state => state.phonebook.filter);
+  const filter = useSelector(getFilterValue);
   const dispatch = useDispatch();
 
   return (

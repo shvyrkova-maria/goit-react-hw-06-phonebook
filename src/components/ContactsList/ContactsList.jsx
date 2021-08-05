@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FaUser, FaPhoneAlt } from 'react-icons/fa';
 import * as actions from 'redux/contacts/contacts-actions';
+import { getFiltredContactsList } from 'redux/contacts/contacts-selectors';
 import {
   Contacts,
   ContactsItem,
@@ -10,20 +11,8 @@ import {
 } from 'components/ContactsList/ContactsList.styled';
 
 function ContactsList() {
-  const contacts = useSelector(state =>
-    filtredContacts(state.phonebook.contacts, state.phonebook.filter),
-  );
+  const contacts = useSelector(getFiltredContactsList);
   const dispatch = useDispatch();
-
-  function filtredContacts(allContacts, filter) {
-    const normalizeFilter = filter.toLowerCase();
-
-    return allContacts.filter(
-      ({ name, number }) =>
-        name.toLowerCase().includes(normalizeFilter) ||
-        number.includes(normalizeFilter),
-    );
-  }
 
   return (
     <Contacts>
