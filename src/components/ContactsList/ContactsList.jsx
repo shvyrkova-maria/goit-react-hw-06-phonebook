@@ -10,19 +10,24 @@ import {
 } from 'components/ContactsList/ContactsList.styled';
 
 function ContactsList() {
-  const { contacts, filter } = useSelector(state => state.phonebook);
+  const contacts = useSelector(state =>
+    filtredContacts(state.phonebook.contacts, state.phonebook.filter),
+  );
   const dispatch = useDispatch();
 
-  const normalizeFilter = filter.toLowerCase();
-  const filtred = contacts.filter(
-    ({ name, number }) =>
-      name.toLowerCase().includes(normalizeFilter) ||
-      number.includes(normalizeFilter),
-  );
+  function filtredContacts(allContacts, filter) {
+    const normalizeFilter = filter.toLowerCase();
+
+    return allContacts.filter(
+      ({ name, number }) =>
+        name.toLowerCase().includes(normalizeFilter) ||
+        number.includes(normalizeFilter),
+    );
+  }
 
   return (
     <Contacts>
-      {filtred.map(({ id, name, number }) => {
+      {contacts.map(({ id, name, number }) => {
         return (
           <ContactsItem key={id}>
             <div>
