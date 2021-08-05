@@ -3,15 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "formik": "^2.2.9",
     "modern-normalize": "^1.1.0",
+    "nanoid": "^3.1.23",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
+    "react-debounce-input": "^3.2.4",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.4",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
+    "redux": "^4.1.0",
+    "web-vitals": "^1.1.2",
+    "yup": "^0.32.9",
+    "yup-phone": "^1.2.19"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,7 +52,8 @@
     "eslint": "^7.31.0",
     "husky": "^7.0.1",
     "lint-staged": "^11.1.1",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "redux-devtools-extension": "^2.13.9"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
